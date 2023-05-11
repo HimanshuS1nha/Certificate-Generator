@@ -9,6 +9,12 @@
         integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
     <title>Certificate Generator</title>
     <style>
+        body {
+            background: url('/static/background.jpg') no-repeat;
+            background-size: cover;
+            color: white;
+        }
+
         #bg {
             position: absolute;
             top: 80%;
@@ -18,43 +24,140 @@
 
         #container {
             position: relative;
+            display: flex;
+            height: 90vh;
+        }
+
+        .form {
+            width: 100%;
+        }
+
+        .title {
+            margin: auto;
+            font-size: 25px;
+            font-weight: 900;
+            color: white;
+        }
+
+        @media (max-width:800px) {
+            .title {
+                font-size: 14px;
+            }
+        }
+
+        .label {
+            font-weight: 800;
+            font-size: 18px;
+        }
+
+        .btn-container {
+            display: flex;
+            justify-content: center;
+        }
+
+        .main-btn {
+            color: white;
+            padding: 10px 28px;
+            font-size: 20px;
+            font-weight: 500;
+            margin: 0px 10px;
+        }
+
+        footer {
+            position: absolute;
+            bottom: 0;
+            width: 100%;
+            display: flex;
+            justify-content: center;
+        }
+
+        .footer-text {
+            font-size: 16px;
+            font-weight: 500;
+        }
+
+        #creator,
+        .heart {
+            font-size: 20px;
         }
     </style>
 </head>
 
 <body>
-    <nav class="navbar bg-primary">
+    <nav class="navbar" style="height: 10vh; background: linear-gradient(to right bottom,black,rgb(54, 86, 96));">
         <div class="container-fluid">
-            <span class="navbar-brand mb-0 h1 m-auto">FRIENGINEERS</span>
+            <span class="mb-0 h1 title">AUTOMATED CERTIFICATE MANAGEMENT SYSTEM</span>
         </div>
     </nav>
     <div class="container my-3" id="container">
-        <img src="/static/bg.jpg" alt="..." id="bg">
-        <form action="/api/file" method="post" enctype="multipart/form-data">
+        <!-- <img src="/static/bg.png" alt="..." id="bg"> -->
+        <form action="/api/file" method="post" enctype="multipart/form-data" class="form">
             <div class="mb-3">
-                <label for="file" class="form-label">Upload CSV file</label>
+                <label for="file" class="form-label label">Upload EXCEL file</label>
                 <input type="file" class="form-control" id="file" aria-describedby="emailHelp" name="file">
             </div>
             <div class="mb-3">
-                <label for="template" class="form-label">Upload the certificate template</label>
+                <label for="template" class="form-label label">Upload the certificate template</label>
                 <input type="file" class="form-control" id="template" name="template">
             </div>
+            <!-- <div class="mb-3">
+                <label for="sign" class="form-label label">Upload Signature</label>
+                <input type="file" class="form-control" id="sign" name="sign">
+            </div> -->
             <div class="mb-3">
-                <label for="title" class="form-label">Title</label>
+                <label for="title" class="form-label label">Event Title</label>
                 <input type="text" class="form-control" id="title" name="title">
             </div>
             <div class="mb-3">
-                <label for="date" class="form-label">Date of issue</label>
-                <input type="date" class="form-control" id="date" name="date">
+                <label for="date" class="form-label label">Date of issue</label>
+                <input type="date" class="form-control" id="date" name="date" oninput="dateCheck()">
             </div>
-            <button type="submit" class="btn btn-primary">Submit</button>
+            <div class="btn-container">
+                <button type="submit" class="btn btn-primary main-btn">Submit</button>
+                <button type="reset" class="btn btn-warning main-btn">Reset</button>
+            </div>
         </form>
     </div>
+
+    <footer>
+        <p class="footer-text">MADE BY <span id="creator">FRIENGINEERS</span><span class="heart"> with ❤️</span></p>
+    </footer>
 
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe"
         crossorigin="anonymous"></script>
+
+    <script>
+        function dateCheck() {
+            console.log("YEAH")
+            let inputDate = document.getElementById('date');
+            const date = new Date();
+            const year = date.getFullYear();
+            const month = date.getMonth();
+            const day = date.getDate();
+            if (inputDate.value.split("-")[2] > day) {
+                alert(`Please enter a date before ${day}-${month}-${year}`)
+                inputDate.value = ''
+            }
+            // return `${year}-${month}-${day}`
+        }
+
+        const name = document.getElementById('creator');
+        const names = ["FRIENGINEERS", "KHUSHI", "NAMAN", "CHANDAN", "HIMANSHU"]
+        console.log(name);
+        i = 1;
+        console.log("Here");
+        setInterval(() => {
+            name.innerHTML = names[i];
+            if (i === names.length - 1) {
+                i = 0
+            }
+            else {
+                i = i + 1;
+            }
+        }, 2000);
+    </script>
 </body>
 
 </html>
